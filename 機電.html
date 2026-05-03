@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基本電學 完整筆記</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root{
+  --bg:#fdfcf8;
+  --paper:#ffffff;
+  --ink:#1c1a14;
+  --ink2:#3c3a2e;
+  --muted:#9a9880;
+  --rule:#e4e0d0;
+  --rule2:#f0ece0;
+  --accent:#1c3a5c;
+  --accent2:#2e5c8a;
+  --r:#a83030;
+  --c:#1a6040;
+  --l:#502880;
+  --rc:#b84800;
+  --rl:#1a4870;
+  --rlc:#0a5848;
+  --gold:#806000;
+  --highlight:#fffadc;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body{
+  font-family:'Noto Sans TC',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  font-size:13.5px;
+  line-height:1.75;
+}
+
+/* TOPBAR */
+.topbar{
+  background:var(--accent);
+  padding:0;
+  display:flex;
+  align-items:stretch;
+  position:sticky;top:0;z-index:200;
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
+  overflow-x:auto;
+}
+.topbar-logo{
+  padding:12px 18px;
+  color:#fff;font-size:13px;font-weight:700;
+  white-space:nowrap;
+  border-right:1px solid rgba(255,255,255,.15);
+  font-family:'Noto Serif TC',serif;
+  display:flex;align-items:center;gap:6px;
+}
+.topbar-logo span{color:#7ab8f5;}
+.navbtn{
+  padding:0 16px;
+  color:rgba(255,255,255,.55);
+  font-size:12px;cursor:pointer;
+  border:none;background:transparent;
+  font-family:'Noto Sans TC',sans-serif;
+  border-bottom:2px solid transparent;
+  transition:all .15s;white-space:nowrap;
+}
+.navbtn:hover{color:rgba(255,255,255,.85);}
+.navbtn.on{color:#fff;border-bottom-color:#7ab8f5;}
+
+/* PAGES */
+.page{display:none;max-width:840px;margin:0 auto;padding:32px 24px 80px;}
+.page.on{display:block;}
+
+/* CHAPTER HEADER */
+.ch-header{
+  margin-bottom:28px;padding:20px 24px;
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-left:5px solid var(--accent);
+  border-radius:0 10px 10px 0;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+.ch-header h2{
+  font-family:'Noto Serif TC',serif;
+  font-size:22px;font-weight:700;
+  color:var(--accent);margin-bottom:4px;
+}
+.ch-header p{color:var(--muted);font-size:12px;}
+
+/* SECTION BLOCK */
+.sblock{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-radius:10px;
+  margin-bottom:20px;
+  overflow:hidden;
+  box-shadow:0 1px 6px rgba(0,0,0,.04);
+}
+.sblock-title{
+  padding:11px 18px;
+  background:var(--accent);
+  color:#fff;
+  font-size:14px;font-weight:700;
+  display:flex;align-items:center;gap:10px;
+  font-family:'Noto Serif TC',serif;
+}
+.sblock-title .tag{
+  font-size:10px;padding:2px 8px;border-radius:10px;
+  background:rgba(255,255,255,.15);color:rgba(255,255,255,.85);
+  font-family:'Noto Sans TC',sans-serif;font-weight:500;
+}
+.sblock-body{padding:18px 20px;}
+
+/* SUBSECTION */
+.sub{
+  margin-bottom:16px;
+  padding-bottom:16px;
+  border-bottom:1px dashed var(--rule2);
+}
+.sub:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.sub-title{
+  font-size:13px;font-weight:700;
+  color:var(--accent2);
+  margin-bottom:8px;
+  display:flex;align-items:center;gap:6px;
+}
+.sub-title::before{
+  content:'';display:block;
+  width:3px;height:14px;
+  background:var(--accent2);border-radius:2px;
+}
+
+/* FORMULA BOX */
+.fbox{
+  background:var(--rule2);
+  border:1px solid var(--rule);
+  border-left:3px solid var(--accent2);
+  border-radius:0 6px 6px 0;
+  padding:10px 14px;
+  margin:8px 0;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;color:var(--ink2);
+  line-height:2;
+}
+.fbox.gold{border-left-color:var(--gold);background:var(--highlight);color:#5a3800;}
+.fbox.red{border-left-color:var(--r);background:#fff5f5;color:#5a1010;}
+.fbox.green{border-left-color:var(--c);background:#f0fbf5;color:#0a3820;}
+.fline{display:block;padding:1px 0;}
+.fline.hi{
+  background:rgba(0,80,160,.07);border-radius:3px;
+  padding:2px 6px;margin:2px -6px;
+  font-weight:600;color:var(--accent);
+}
+.fline.key{
+  background:rgba(180,80,0,.07);border-radius:3px;
+  padding:2px 6px;margin:2px -6px;
+  font-weight:600;color:var(--rc);
+}
+
+/* NOTE / TIP */
+.tip{
+  background:var(--highlight);
+  border:1px solid #e0c840;
+  border-left:4px solid var(--gold);
+  border-radius:0 7px 7px 0;
+  padding:9px 14px;margin:9px 0;
+  font-size:12.5px;color:#4a3600;
+}
+.tip b{color:var(--gold);}
+.note{
+  background:#f0f6ff;border:1px solid #c0d8f8;
+  border-left:4px solid var(--accent2);
+  border-radius:0 7px 7px 0;
+  padding:9px 14px;margin:9px 0;
+  font-size:12.5px;color:#1a3a60;
+}
+.warn{
+  background:#fff5f5;border:1px solid #f0c0c0;
+  border-left:4px solid var(--r);
+  border-radius:0 7px 7px 0;
+  padding:9px 14px;margin:9px 0;
+  font-size:12.5px;color:#5a1010;
+}
+
+/* TABLE */
+.nt{
+  width:100%;border-collapse:collapse;
+  font-size:12px;margin:10px 0;
+}
+.nt th{
+  background:var(--accent);color:#fff;
+  padding:8px 11px;text-align:left;
+  font-weight:500;font-size:11px;
+}
+.nt td{
+  padding:7px 11px;
+  border-bottom:1px solid var(--rule2);
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;vertical-align:middle;
+}
+.nt tr:last-child td{border-bottom:none;}
+.nt tr:nth-child(even) td{background:var(--rule2);}
+.nt tr:hover td{background:#eef4ff;}
+
+/* DIRECTION VISUAL */
+.dir3{display:flex;gap:10px;margin:12px 0;}
+.dir-box{
+  flex:1;
+  background:var(--paper);border:1px solid var(--rule);
+  border-radius:8px;padding:12px 8px;text-align:center;
+}
+.dir-arrow{font-size:26px;line-height:1;margin-bottom:4px;}
+.dir-name{font-size:12px;font-weight:700;margin-bottom:2px;}
+.dir-form{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);}
+
+/* GRID 2 COL */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
+@media(max-width:580px){.g2{grid-template-columns:1fr;}}
+
+/* COLOR CARDS */
+.cc{background:var(--paper);border:1.5px solid var(--rule);border-radius:9px;overflow:hidden;}
+.cc-h{padding:9px 12px;font-size:12px;font-weight:700;color:#fff;}
+.cc-b{padding:11px 13px;}
+.tag2{
+  display:inline-block;font-size:10px;
+  padding:2px 9px;border-radius:10px;
+  margin-top:6px;font-weight:600;
+}
+
+/* STEP LIST */
+.steps{margin:8px 0;}
+.step{display:flex;gap:9px;align-items:flex-start;margin-bottom:7px;}
+.sn{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--accent);color:#fff;
+  font-size:9px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:2px;
+}
+.st{font-size:12.5px;line-height:1.65;font-family:'JetBrains Mono',monospace;}
+
+/* TRIANGLE SVG WRAPPER */
+.svgwrap{
+  background:var(--paper);border:1px solid var(--rule);
+  border-radius:10px;padding:14px;margin:10px 0;
+  text-align:center;
+}
+.svgwrap p{font-size:11px;color:var(--muted);margin-top:6px;}
+
+/* CMP 3 */
+.cmp3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:10px 0;}
+.ci{
+  background:var(--paper);border:1px solid var(--rule);
+  border-radius:8px;padding:11px 8px;text-align:center;
+}
+.ci-v{font-size:19px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+.ci-l{font-size:11px;color:var(--muted);margin-top:2px;}
+.ci-s{font-size:10px;color:var(--muted);}
+
+@media print{
+  .topbar{display:none;}
+  .page{display:block!important;padding:0;max-width:100%;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo">⚡ 基本電學 <span>完整筆記</span></div>
+  <button class="navbtn on" onclick="go('p0',this)">前置</button>
+  <button class="navbtn" onclick="go('p91',this)">9-1 純元件</button>
+  <button class="navbtn" onclick="go('p92',this)">9-2 RC串</button>
+  <button class="navbtn" onclick="go('p93',this)">9-3 RL串</button>
+  <button class="navbtn" onclick="go('p94',this)">9-4 RLC串</button>
+  <button class="navbtn" onclick="go('p95',this)">9-5 RC並</button>
+  <button class="navbtn" onclick="go('p96',this)">9-6 RL並</button>
+  <button class="navbtn" onclick="go('p97',this)">9-7 RLC並</button>
+  <button class="navbtn" onclick="go('p101',this)">10-1 瞬間</button>
+  <button class="navbtn" onclick="go('p102',this)">10-2 平均P</button>
+  <button class="navbtn" onclick="go('p103',this)">10-3 視在S</button>
+  <button class="navbtn" onclick="go('p104',this)">10-4 虛功Q</button>
+  <button class="navbtn" onclick="go('p105',this)">10-5 PF</button>
+  <button class="navbtn" onclick="go('p106',this)">10-6 複數</button>
+  <button class="navbtn" onclick="go('p107',this)">10-7 改善</button>
+  <button class="navbtn" onclick="go('pall',this)">總速查</button>
+</div>
+
+<!-- ========== 前置 ========== -->
+<div class="page on" id="p0">
+<div class="ch-header">
+  <h2>📐 前置知識：相量表示法</h2>
+  <p>交流電路的計算基礎，所有章節都會用到</p>
+</div>
+
+<div class="sblock">
+  <div class="sblock-title">一、正弦波標準形式</div>
+  <div class="sblock-body">
+    <div class="fbox gold">
+      <span class="fline hi">v(t) = Vm · sin(ωt + θ)　←　標準時域寫法</span>
+      <span class="fline">Vm　= 峰值（最大值）＝ V × √2 ≈ 1.414V</span>
+      <span class="fline">V　 = 有效值（RMS）＝ Vm ÷ √2 ≈ 0.707Vm</span>
+      <span class="fline">ω　 = 角頻率 ＝ 2πf　（單位：rad/s）</span>
+      <span class="fline">f　 = 頻率　（單位：Hz）</span>
+      <span class="fline">θ　 = 初始相位角</span>
+    </div>
+    <div class="tip"><b>常用換算：</b>f = 60Hz → ω = 2π×60 ≈ 377 rad/s　｜　f = 50Hz → ω ≈ 314 rad/s</div>
+    <div class="tip"><b>家用電：</b>台灣 110V / 60Hz，這個 110V 就是有效值，峰值 = 110×√2 ≈ 155.6V</div>
+  </div>
+</div>
+
+<div class="sblock">
+  <div class="sblock-title">二、相量（Phasor）表示</div>
+  <div class="sblock-body">
+    <div class="note">把正弦波「壓縮」成一個向量，用<b>有效值 + 角度</b>來表示，大幅簡化計算</div>
+    <div class="sub">
+      <div class="sub-title">時域 → 相量</div>
+      <div class="fbox gold">
+        <span class="fline hi">v(t) = Vm·sin(ωt + θ)　⟹　V̄ = (Vm/√2)∠θ = V∠θ</span>
+        <span class="fline">範例：v(t) = 100√2·sin(ωt + 30°)</span>
+        <span class="fline hi">　　→ V̄ = 100∠30° V</span>
+      </div>
+    </div>
+    <div class="sub">
+      <div class="sub-title">兩種表示形式</div>
+      <div class="g2">
+        <div>
+          <div class="fbox">
+            <span class="fline hi">極式：A∠θ</span>
+            <span class="fline">→ 乘法、除法用這個</span>
+            <span class="fline">→ 模（大小）+ 角度</span>
+          </div>
+        </div>
+        <div>
+          <div class="fbox">
+            <span class="fline hi">直角式：a + jb</span>
+            <span class="fline">→ 加法、減法用這個</span>
+            <span class="fline">→ 實部 + 虛部</span>
+          </div>
+        </div>
+      </div>
+      <div class="tip"><b>口訣：</b>乘除用極式（角度加減）｜加減用直角式（實虛分開）</div>
+    </div>
+    <div class="sub">
+      <div class="sub-title">互相換算公式</div>
+      <div class="fbox">
+        <span class="fline hi">直角式 → 極式：a+jb　⟹　√(a²+b²) ∠ tan⁻¹(b/a)</span>
+        <span class="fline hi">極式 → 直角式：A∠θ　⟹　Acosθ + jAsinθ</span>
+        <span class="fline">範例：3+j4 → √(9+16)∠tan⁻¹(4/3) = 5∠53°</span>
+        <span class="fline">範例：5∠53° → 5cos53°+j5sin53° = 3+j4</span>
+      </div>
+      <div class="svgwrap">
+        <svg viewBox="0 0 340 160" width="100%" style="max-width:340px">
+          <line x1="30" y1="120" x2="250" y2="120" stroke="#aaa" stroke-width="1"/>
+          <line x1="30" y1="130" x2="30" y2="20" stroke="#aaa" stroke-width="1"/>
+          <polygon points="30,120 200,120 200,50" fill="#f0f6ff" stroke="none"/>
+          <line x1="30" y1="120" x2="200" y2="120" stroke="#1a5276" stroke-width="2.5"/>
+          <line x1="200" y1="120" x2="200" y2="50" stroke="#1a6040" stroke-width="2.5"/>
+          <line x1="30" y1="120" x2="200" y2="50" stroke="#a83030" stroke-width="3"/>
+          <polyline points="200,108 188,108 188,120" fill="none" stroke="#999" stroke-width="1"/>
+          <path d="M 78,120 A 48,48 0 0,1 62,96" fill="none" stroke="#502880" stroke-width="1.8"/>
+          <text x="82" y="108" font-family="sans-serif" font-size="11" fill="#502880">θ</text>
+          <text x="113" y="112" font-family="sans-serif" font-size="11" fill="#1a5276">a（實部）</text>
+          <text x="208" y="88" font-family="sans-serif" font-size="11" fill="#1a6040">b（虛部）</text>
+          <text x="72" y="68" font-family="sans-serif" font-size="12" font-weight="bold" fill="#a83030">A∠θ（斜邊）</text>
+          <text x="208" y="46" font-family="sans-serif" font-size="10" fill="#a83030">a+jb</text>
+          <circle cx="200" cy="50" r="4" fill="#a83030"/>
+          <!-- 公式 -->
+          <text x="255" y="50" font-family="monospace" font-size="10" fill="#5a3800">A=√(a²+b²)</text>
+          <text x="255" y="68" font-family="monospace" font-size="10" fill="#5a3800">θ=tan⁻¹(b/a)</text>
+          <line x1="253" y1="76" x2="335" y2="76" stroke="#e0e0d0"/>
+          <text x="255" y="92" font-family="monospace" font-size="10" fill="#1a3a60">a=Acosθ</text>
+          <text x="255" y="110" font-family="monospace" font-size="10" fill="#1a3a60">b=Asinθ</text>
+        </svg>
+        <p>直角三角形：底邊=實部a，高=虛部b，斜邊=模A，θ=斜邊與水平夾角</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sblock">
+  <div class="sblock-title">三、四則運算規則</div>
+  <div class="sblock-body">
+    <table class="nt">
+      <tr><th>運算</th><th>使用形式</th><th>規則</th><th>範例</th></tr>
+      <tr><td>乘法 ×</td><td>極式</td><td>A∠α × B∠β = AB∠(α+β)</td><td>5∠30° × 2∠45° = 10∠75°</td></tr>
+      <tr><td>除法 ÷</td><td>極式</td><td>A∠α ÷ B∠β = (A/B)∠(α-β)</td><td>10∠60° ÷ 2∠20° = 5∠40°</td></tr>
+      <tr><td>加法 +</td><td>直角式</td><td>(a+jb)+(c+jd) = (a+c)+j(b+d)</td><td>(3+j4)+(1-j2) = 4+j2</td></tr>
+      <tr><td>減法 -</td><td>直角式</td><td>(a+jb)-(c+jd) = (a-c)+j(b-d)</td><td>(5+j3)-(2+j1) = 3+j2</td></tr>
+    </table>
+    <div class="warn"><b>⚠️ 最常犯的錯：</b>除以負角要注意！<br>
+    V̄/Z̄ = 100∠0° ÷ 50∠-53° = 2∠(0-(-53)) = 2∠<b>+53°</b>　←　負負得正！</div>
+  </div>
+</div>
+
+<div class="sblock">
+  <div class="sblock-title">四、j 的意義與相位</div>
+  <div class="sblock-body">
+    <table class="nt">
+      <tr><th>操作</th><th>幾何意義</th><th>結果</th></tr>
+      <tr><td>× j</td><td>相位逆時針轉 90°（超前）</td><td>A∠θ × j = A∠(θ+90°)</td></tr>
+      <tr><td>÷ j</td><td>相位順時針轉 90°（落後）</td><td>A∠θ ÷ j = A∠(θ-90°)</td></tr>
+      <tr><td>j²</td><td>-1</td><td>j = √(-1)</td></tr>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- ========== 9-1 純元件 ========== -->
+<div class="page" id="p91">
+<div class="ch-header" style="border-left-color:var(--r)">
+  <h2>9-1　純元件交流電路</h2>
+  <p>9-1.1 純電阻R　｜　9-1.2 純電容C　｜　9-1.3 純電感L</p>
+</div>
+
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--r)">9-1.1　純電阻電路（R）</div>
+  <div class="sblock-body">
+    <div class="fbox">
+      <span class="fline hi">Z̄ = R∠0°　（阻抗為純實數，無虛部）</span>
+      <span class="fline hi">Ī = V̄/Z̄ = V̄/R</span>
+      <span class="fline">相位差 θ = θV - θI = 0°</span>
+      <span class="fline">特性：電阻值不受頻率影響</span>
+    </div>
+    <div class="tip"><b>V 與 I 同相位</b>——電壓和電流同時達到最大值、同時過零點</div>
+    <div class="sub">
+      <div class="sub-title">例題</div>
+      <div class="fbox green">
+        <span class="fline">已知：V̄ = 100∠30° V，R = 50Ω</span>
+        <span class="fline hi">Z̄ = 50∠0° Ω</span>
+        <span class="fline hi">Ī = 100∠30° ÷ 50∠0° = 2∠30° A</span>
+        <span class="fline">相位差 = 30° - 30° = 0°　✓ 同相</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--c)">9-1.2　純電容電路（C）</div>
+  <div class="sblock-body">
+    <div class="fbox">
+      <span class="fline hi">Xc = 1/(ωC) = 1/(2πfC)　（單位：Ω）</span>
+      <span class="fline hi">Z̄ = Xc∠-90° = -jXc</span>
+      <span class="fline hi">Ī = V̄/Z̄　⟹　電流角度 = 電壓角度 + 90°</span>
+      <span class="fline">相位差 θ = -90°</span>
+    </div>
+    <div class="g2">
+      <div class="note"><b>I 超前 V 90°</b><br>電容像彈簧，電流先衝進去充電，電壓後到</div>
+      <div>
+        <table class="nt">
+          <tr><th>頻率</th><th>Xc</th><th>狀態</th></tr>
+          <tr><td>f = 0（直流）</td><td>→ ∞</td><td>開路</td></tr>
+          <tr><td>f 越高</td><td>越小</td><td>越易通</td></tr>
+          <tr><td>f → ∞</td><td>→ 0</td><td>短路</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="sub">
+      <div class="sub-title">例題</div>
+      <div class="fbox green">
+        <span class="fline">已知：V̄ = 100∠0° V，Xc = 25Ω</span>
+        <span class="fline hi">Z̄ = 25∠-90° Ω</span>
+        <span class="fline hi">Ī = 100∠0° ÷ 25∠-90° = 4∠+90° A</span>
+        <span class="fline">相位差 = 0° - 90° = -90°　✓ I超前V</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--l)">9-1.3　純電感電路（L）</div>
+  <div class="sblock-body">
+    <div class="fbox">
+      <span class="fline hi">XL = ωL = 2πfL　（單位：Ω）</span>
+      <span class="fline hi">Z̄ = XL∠+90° = jXL</span>
+      <span class="fline hi">Ī = V̄/Z̄　⟹　電流角度 = 電壓角度 - 90°</span>
+      <span class="fline">相位差 θ = +90°</span>
+    </div>
+    <div class="g2">
+      <div class="note"><b>V 超前 I 90°</b><br>電感像慣性水輪，施壓後電流慢慢才增加</div>
+      <div>
+        <table class="nt">
+          <tr><th>頻率</th><th>XL</th><th>狀態</th></tr>
+          <tr><td>f = 0（直流）</td><td>= 0</td><td>短路</td></tr>
+          <tr><td>f 越高</td><td>越大</td><td>越難通</td></tr>
+          <tr><td>f → ∞</td><td>→ ∞</td><td>開路</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="sub">
+      <div class="sub-title">三種純元件對比總表</div>
+      <table class="nt">
+        <tr><th>元件</th><th>阻抗</th><th>電抗公式</th><th>相位差θ</th><th>V與I</th><th>直流</th></tr>
+        <tr><td style="color:var(--r);font-weight:700">純R</td><td>R∠0°</td><td>（不變）</td><td>0°</td><td>同相</td><td>正常</td></tr>
+        <tr><td style="color:var(--c);font-weight:700">純C</td><td>Xc∠-90°</td><td>Xc=1/(ωC)</td><td>-90°</td><td>I超前V</td><td>開路</td></tr>
+        <tr><td style="color:var(--l);font-weight:700">純L</td><td>XL∠+90°</td><td>XL=ωL</td><td>+90°</td><td>V超前I</td><td>短路</td></tr>
+      </table>
+      <div class="warn"><b>⚠️ C和L完全相反：</b>直流C開路L短路；頻率越高Xc越小XL越大；C讓I超前，L讓V超前</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== 9-2 RC串聯 ========== -->
+<div class="page" id="p92">
+<div class="ch-header" style="border-left-color:var(--rc)">
+  <h2>9-2　RC 串聯電路</h2>
+  <p>R 和 C 串聯——電流相同，電壓各自分配</p>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--rc)">阻抗圖解與公式</div>
+  <div class="sblock-body">
+    <div class="dir3">
+      <div class="dir-box"><div class="dir-arrow" style="color:#1a5276">→</div><div class="dir-name" style="color:#1a5276">R 往右</div><div class="dir-form">實部</div></div>
+      <div class="dir-box"><div class="dir-arrow" style="color:#1a6040">↓</div><div class="dir-name" style="color:#1a6040">Xc 往下</div><div class="dir-form">-jXc</div></div>
+      <div class="dir-box" style="background:#fff8f0;border-color:#e0b880"><div class="dir-arrow" style="color:var(--rc)">↘</div><div class="dir-name" style="color:var(--rc)">Z 斜右下</div><div class="dir-form">第四象限，負角</div></div>
+    </div>
+    <div class="fbox">
+      <span class="fline hi">Z̄ = R - jXc　（直角式）</span>
+      <span class="fline hi">|Z| = √(R² + Xc²)　（模，斜邊長）</span>
+      <span class="fline">Z̄角度 = -tan⁻¹(Xc/R)　（負角）</span>
+      <span class="fline hi">Ī = V̄ / Z̄</span>
+      <span class="fline hi">V̄R = Ī × R∠0°　（與I同相）</span>
+      <span class="fline hi">V̄C = Ī × Xc∠-90°　（落後I 90°）</span>
+      <span class="fline">V（合成）= √(VR² + VC²)</span>
+      <span class="fline key">相位差 θ = θV - θI = 負值　→　電容性，V落後I，0°~-90°</span>
+    </div>
+    <div class="tip"><b>解題步驟：</b><br>
+    ①若給C和ω，先算Xc=1/(ωC)　②畫三角形：R右Xc下，找|Z|和角度　③算Ī=V̄/Z̄　④算V̄R、V̄C　⑤驗算：√(VR²+VC²)=V</div>
+  </div>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--rc)">例題</div>
+  <div class="sblock-body">
+    <div class="fbox green">
+      <span class="fline">已知：V̄=100∠0° V，R=30Ω，Xc=40Ω</span>
+      <span class="fline">①　|Z|=√(30²+40²)=√2500=<b>50Ω</b>　（3-4-5三角形）</span>
+      <span class="fline">②　角度=-53°　→　Z̄=50∠-53° Ω</span>
+      <span class="fline hi">③　Ī=100∠0°÷50∠-53°=2∠+53° A</span>
+      <span class="fline hi">④　V̄R=2∠53°×30∠0°=60∠53° V</span>
+      <span class="fline hi">⑤　V̄C=2∠53°×40∠-90°=80∠-37° V</span>
+      <span class="fline">⑥　驗算：√(60²+80²)=100V ✓</span>
+      <span class="fline">相位差=0°-53°=-53°　→　電容性，V落後I</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== 9-3 RL串聯 ========== -->
+<div class="page" id="p93">
+<div class="ch-header" style="border-left-color:var(--rl)">
+  <h2>9-3　RL 串聯電路</h2>
+  <p>R 和 L 串聯——電流相同，電壓各自分配</p>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--rl)">阻抗圖解與公式</div>
+  <div class="sblock-body">
+    <div class="dir3">
+      <div class="dir-box"><div class="dir-arrow" style="color:#1a5276">→</div><div class="dir-name" style="color:#1a5276">R 往右</div><div class="dir-form">實部</div></div>
+      <div class="dir-box"><div class="dir-arrow" style="color:#502880">↑</div><div class="dir-name" style="color:#502880">XL 往上</div><div class="dir-form">+jXL</div></div>
+      <div class="dir-box" style="background:#f0f4ff;border-color:#a0b8e0"><div class="dir-arrow" style="color:var(--rl)">↗</div><div class="dir-name" style="color:var(--rl)">Z 斜右上</div><div class="dir-form">第一象限，正角</div></div>
+    </div>
+    <div class="fbox">
+      <span class="fline hi">Z̄ = R + jXL　（直角式）</span>
+      <span class="fline hi">|Z| = √(R² + XL²)　（模，斜邊長）</span>
+      <span class="fline">Z̄角度 = +tan⁻¹(XL/R)　（正角）</span>
+      <span class="fline hi">Ī = V̄ / Z̄</span>
+      <span class="fline hi">V̄R = Ī × R∠0°　（與I同相）</span>
+      <span class="fline hi">V̄L = Ī × XL∠+90°　（超前I 90°）</span>
+      <span class="fline">V（合成）= √(VR² + VL²)</span>
+      <span class="fline key">相位差 θ = θV - θI = 正值　→　電感性，V超前I，0°~+90°</span>
+    </div>
+    <div class="tip"><b>解題步驟：</b><br>
+    ①若給L和ω，先算XL=ωL　②畫三角形：R右XL上，找|Z|和角度　③算Ī=V̄/Z̄　④算V̄R、V̄L　⑤驗算：√(VR²+VL²)=V</div>
+  </div>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--rl)">例題</div>
+  <div class="sblock-body">
+    <div class="fbox green">
+      <span class="fline">已知：v(t)=100√2·sin(1000t+30°)V，R=10Ω，L=10mH</span>
+      <span class="fline">①　V̄=100∠30° V（有效值100V，初相位30°）</span>
+      <span class="fline">②　XL=ωL=1000×0.01=<b>10Ω</b></span>
+      <span class="fline">③　|Z|=√(10²+10²)=10√2≈<b>14.14Ω</b>　（等腰直角，角度=45°）</span>
+      <span class="fline hi">④　Ī=100∠30°÷14.14∠45°=7.07∠-15° A</span>
+      <span class="fline hi">⑤　V̄R=7.07∠-15°×10∠0°=70.7∠-15° V</span>
+      <span class="fline hi">⑥　V̄L=7.07∠-15°×10∠90°=70.7∠75° V</span>
+      <span class="fline">相位差=30°-(-15°)=45°　→　電感性</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== 9-4 RLC串聯 ========== -->
+<div class="page" id="p94">
+<div class="ch-header" style="border-left-color:var(--rlc)">
+  <h2>9-4　RLC 串聯電路</h2>
+  <p>XL 和 Xc 方向相反，互相抵消，看誰大決定性質</p>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--rlc)">完整公式</div>
+  <div class="sblock-body">
+    <div class="fbox">
+      <span class="fline key">淨電抗 = XL - Xc　←　最關鍵！正→電感性，負→電容性</span>
+      <span class="fline hi">Z̄ = R + j(XL - Xc)</span>
+      <span class="fline hi">|Z| = √(R² + (XL-Xc)²)</span>
+      <span class="fline">Z̄角度 = tan⁻¹((XL-Xc)/R)　（正→電感，負→電容）</span>
+      <span class="fline hi">Ī = V̄ / Z̄</span>
+      <span class="fline">V̄R = Ī × R∠0°</span>
+      <span class="fline">V̄L = Ī × XL∠+90°　（超前I 90°）</span>
+      <span class="fline">V̄C = Ī × Xc∠-90°　（落後I 90°）</span>
+      <span class="fline">V = √(VR² + (VL-VC)²)</span>
+      <span class="fline key">分壓定則：V̄x = V̄ × (Z̄x / Z̄T)</span>
+    </div>
+    <table class="nt">
+      <tr><th>條件</th><th>淨電抗</th><th>Z̄角度</th><th>電路性質</th><th>相位</th><th>諧振</th></tr>
+      <tr><td>XL &gt; Xc</td><td>正值，↑</td><td>正角 +θ</td><td>電感性</td><td>V超前I</td><td>-</td></tr>
+      <tr><td>XL = Xc</td><td>0，互消</td><td>0°</td><td>純電阻性</td><td>V與I同相</td><td>串聯諧振！Z=R（最小），電流最大</td></tr>
+      <tr><td>XL &lt; Xc</td><td>負值，↓</td><td>負角 -θ</td><td>電容性</td><td>I超前V</td><td>-</td></tr>
+    </table>
+  </div>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--rlc)">例題</div>
+  <div class="sblock-body">
+    <div class="fbox green">
+      <span class="fline">已知：V̄=100∠0° V，R=30Ω，XL=60Ω，Xc=20Ω</span>
+      <span class="fline key">①　XL-Xc=60-20=40Ω（正→電感性）</span>
+      <span class="fline">②　|Z|=√(30²+40²)=√2500=<b>50Ω</b>　（3-4-5三角形）</span>
+      <span class="fline">③　角度=+53°　→　Z̄=50∠53° Ω</span>
+      <span class="fline hi">④　Ī=100∠0°÷50∠53°=2∠-53° A</span>
+      <span class="fline hi">⑤　V̄R=2∠-53°×30∠0°=60∠-53° V</span>
+      <span class="fline hi">⑥　V̄L=2∠-53°×60∠90°=120∠37° V</span>
+      <span class="fline hi">⑦　V̄C=2∠-53°×20∠-90°=40∠-143° V</span>
+    </div>
+    <div class="tip"><b>常考！3-4-5系列：</b>R=30,X=40,Z=50（角53°）｜R=40,X=30,Z=50（角37°）｜R=6,X=8,Z=10｜R=5,X=12,Z=13</div>
+  </div>
+</div>
+</div>
+
+<!-- ========== 9-5 RC並聯 ========== -->
+<div class="page" id="p95">
+<div class="ch-header" style="border-left-color:#6a7a3a">
+  <h2>9-5　RC 並聯電路</h2>
+  <p>並聯電路改用導納 Ȳ 計算，電壓相同，電流分配</p>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:#6a7a3a">導納概念與公式</div>
+  <div class="sblock-body">
+    <div class="note"><b>導納 Ȳ = 1/Z̄</b>（單位：西門子 S）是阻抗的倒數，並聯電路用這個計算最方便</div>
+    <div class="fbox">
+      <span class="fline hi">G = 1/R　（電導，S）</span>
+      <span class="fline hi">Bc = 1/Xc = ωC　（電容納，S）</span>
+      <span class="fline hi">Ȳ = G - jBc　（直角式）</span>
+      <span class="fline hi">|Ȳ| = √(G² + Bc²)</span>
+      <span class="fline">Ȳ角度 = -tan⁻¹(Bc/G)　（負角）</span>
+      <span class="fline hi">ĪR = V̄ × G　（與V同相）</span>
+      <span class="fline hi">ĪC = V̄ × Bc∠+90°　（超前V 90°）</span>
+      <span class="fline">|Ī| = √(IR² + IC²)</span>
+      <span class="fline key">電容性：I超前V，0°~+90°</span>
+    </div>
+    <div class="tip"><b>並聯方向：</b>G往右，Bc往<b>上</b>（+j）——注意！Bc往上，和串聯Xc往下相反！</div>
+  </div>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:#6a7a3a">例題</div>
+  <div class="sblock-body">
+    <div class="fbox green">
+      <span class="fline">已知：V̄=100∠0° V，R=50Ω，Xc=25Ω</span>
+      <span class="fline hi">①　G=1/50=0.02S，Bc=1/25=0.04S</span>
+      <span class="fline">②　|Ȳ|=√(0.02²+0.04²)=√0.002≈0.0447S</span>
+      <span class="fline hi">③　ĪR=100×0.02=2∠0° A</span>
+      <span class="fline hi">④　ĪC=100×0.04∠90°=4∠90° A</span>
+      <span class="fline hi">⑤　|Ī|=√(2²+4²)=√20≈4.47 A</span>
+      <span class="fline">電容性，I超前V</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== 9-6 RL並聯 ========== -->
+<div class="page" id="p96">
+<div class="ch-header" style="border-left-color:#3a6a5a">
+  <h2>9-6　RL 並聯電路</h2>
+  <p>並聯電路用導納 Ȳ 計算</p>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:#3a6a5a">公式</div>
+  <div class="sblock-body">
+    <div class="fbox">
+      <span class="fline hi">G = 1/R　（S）</span>
+      <span class="fline hi">BL = 1/XL = 1/(ωL)　（電感納，S）</span>
+      <span class="fline hi">Ȳ = G - jBL　（直角式）</span>
+      <span class="fline hi">|Ȳ| = √(G² + BL²)</span>
+      <span class="fline hi">ĪR = V̄ × G　（與V同相）</span>
+      <span class="fline hi">ĪL = V̄ × BL∠-90°　（落後V 90°）</span>
+      <span class="fline">|Ī| = √(IR² + IL²)</span>
+      <span class="fline key">電感性：I落後V，0°~-90°</span>
+    </div>
+    <div class="tip"><b>並聯方向：</b>G往右，BL往<b>下</b>（-j）——注意！BL往下，和串聯XL往上相反！</div>
+  </div>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:#3a6a5a">例題</div>
+  <div class="sblock-body">
+    <div class="fbox green">
+      <span class="fline">已知：V̄=120∠0° V，R=40Ω，XL=30Ω</span>
+      <span class="fline hi">①　G=1/40=0.025S，BL=1/30≈0.0333S</span>
+      <span class="fline hi">②　ĪR=120×0.025=3∠0° A</span>
+      <span class="fline hi">③　ĪL=120×0.0333∠-90°=4∠-90° A</span>
+      <span class="fline hi">④　|Ī|=√(3²+4²)=5 A　（3-4-5！）</span>
+      <span class="fline">電感性，I落後V</span>
+    </div>
+  </div>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:#2a4a3a">串聯 vs 並聯 方向對比</div>
+  <div class="sblock-body">
+    <table class="nt">
+      <tr><th>元件</th><th>串聯方向</th><th>並聯方向</th></tr>
+      <tr><td>R / G</td><td>R 往右</td><td>G 往右（相同）</td></tr>
+      <tr><td>電感 L</td><td>XL 往<b>上</b>（+j）</td><td>BL 往<b>下</b>（-j）相反！</td></tr>
+      <tr><td>電容 C</td><td>Xc 往<b>下</b>（-j）</td><td>Bc 往<b>上</b>（+j）相反！</td></tr>
+    </table>
+    <div class="warn"><b>⚠️ 容易混淆！</b>並聯的BL和Bc方向，和串聯的XL和Xc完全相反</div>
+  </div>
+</div>
+</div>
+
+<!-- ========== 9-7 RLC並聯 ========== -->
+<div class="page" id="p97">
+<div class="ch-header" style="border-left-color:#3a4a6a">
+  <h2>9-7　RLC 並聯電路</h2>
+  <p>最完整的並聯電路，三支路電流合成</p>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:#3a4a6a">完整公式</div>
+  <div class="sblock-body">
+    <div class="fbox">
+      <span class="fline hi">G=1/R，BL=1/XL，Bc=1/Xc=ωC</span>
+      <span class="fline hi">Ȳ = G + j(Bc - BL)</span>
+      <span class="fline hi">|Ȳ| = √(G² + (Bc-BL)²)</span>
+      <span class="fline">ĪR = V̄×G∠0°　（與V同相）</span>
+      <span class="fline">ĪL = V̄×BL∠-90°　（落後V 90°）</span>
+      <span class="fline">ĪC = V̄×Bc∠+90°　（超前V 90°）</span>
+      <span class="fline">Ī = ĪR + ĪL + ĪC　（相量和）</span>
+      <span class="fline key">分流定則：Ī₁ = Ī × Z̄₂/(Z̄₁+Z̄₂)</span>
+    </div>
+    <table class="nt">
+      <tr><th>條件</th><th>Bc-BL</th><th>性質</th><th>相位</th><th>諧振</th></tr>
+      <tr><td>Bc &gt; BL</td><td>正值，↑</td><td>電容性</td><td>I超前V</td><td>-</td></tr>
+      <tr><td>Bc = BL</td><td>0，互消</td><td>純電阻性</td><td>I與V同相</td><td>並聯諧振！Y=G（最小），阻抗最大</td></tr>
+      <tr><td>Bc &lt; BL</td><td>負值，↓</td><td>電感性</td><td>I落後V</td><td>-</td></tr>
+    </table>
+  </div>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:#3a4a6a">例題</div>
+  <div class="sblock-body">
+    <div class="fbox green">
+      <span class="fline">已知：V̄=100∠0° V，R=10Ω，XL=5Ω，Xc=10Ω</span>
+      <span class="fline hi">①　G=0.1S，BL=0.2S，Bc=0.1S</span>
+      <span class="fline key">②　Bc-BL=0.1-0.2=-0.1S（負→電感性）</span>
+      <span class="fline">③　|Ȳ|=√(0.1²+0.1²)=0.1√2≈0.1414S</span>
+      <span class="fline hi">④　ĪR=100×0.1=10∠0° A</span>
+      <span class="fline hi">⑤　ĪL=100×0.2∠-90°=20∠-90° A</span>
+      <span class="fline hi">⑥　ĪC=100×0.1∠90°=10∠90° A</span>
+      <span class="fline hi">⑦　|Ī|=100×0.1414=14.14 A</span>
+      <span class="fline">BL(0.2)&gt;Bc(0.1)→電感性，I落後V</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== 10-1 ========== -->
+<div class="page" id="p101">
+<div class="ch-header" style="border-left-color:var(--r)">
+  <h2>10-1　瞬間功率 p(t)</h2>
+  <p>交流電路中每一瞬間的功率值</p>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--r)">公式</div>
+  <div class="sblock-body">
+    <div class="fbox gold">
+      <span class="fline hi">p(t) = VI cosθ · [1-cos(2ωt)] + VI sinθ · sin(2ωt)</span>
+      <span class="fline hi">Pmax = VI(1 + cosθ)</span>
+      <span class="fline hi">Pmin = VI(cosθ - 1)</span>
+      <span class="fline key">fp = 2f　←　瞬間功率頻率是電源的2倍！</span>
+    </div>
+    <div class="warn"><b>⚠️ 常考：</b>電源f=60Hz → 瞬間功率fp=120Hz；電源f=50Hz → fp=100Hz</div>
+  </div>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--r)">例題</div>
+  <div class="sblock-body">
+    <div class="fbox green">
+      <span class="fline">已知：V̄=50∠-30°V，Ī=2∠30°A，f=60Hz</span>
+      <span class="fline">①　θ=θV-θI=-30°-30°=-60°</span>
+      <span class="fline">②　VI=50×2=100</span>
+      <span class="fline hi">③　Pmax=100×(1+cos60°)=100×1.5=150W</span>
+      <span class="fline hi">④　Pmin=100×(cos60°-1)=100×(-0.5)=-50W</span>
+      <span class="fline hi">⑤　fp=2×60=120Hz</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== 10-2 ========== -->
+<div class="page" id="p102">
+<div class="ch-header" style="border-left-color:var(--c)">
+  <h2>10-2　平均功率 P（實功率）</h2>
+  <p>單位：瓦特 W，電路真正消耗的功率</p>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--c)">公式</div>
+  <div class="sblock-body">
+    <div class="fbox gold">
+      <span class="fline hi">P = VI · cosθ　（最通用）</span>
+      <span class="fline hi">P = I²R　（串聯或純R）</span>
+      <span class="fline hi">P = V²/R　（純R）</span>
+      <span class="fline hi">P = V²G　（並聯，G=1/R）</span>
+      <span class="fline">θ = θV - θI　（電壓角減電流角）</span>
+    </div>
+    <div class="warn"><b>只有R消耗P！</b>純L和純C：P=0（只是借用能量，會還回來）</div>
+  </div>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--c)">例題</div>
+  <div class="sblock-body">
+    <div class="fbox green">
+      <span class="fline">已知：V̄=100∠0°V，R=30Ω，XL=40Ω（RL串聯）</span>
+      <span class="fline">①　|Z|=50Ω，θ=+53°，I=100/50=2A</span>
+      <span class="fline hi">②　P=I²R=4×30=120W</span>
+      <span class="fline">或　P=VIcosθ=100×2×cos53°=200×0.6=120W ✓</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== 10-3 ========== -->
+<div class="page" id="p103">
+<div class="ch-header" style="border-left-color:var(--rl)">
+  <h2>10-3　視在功率 S</h2>
+  <p>單位：伏安 VA，電源供應的全部功率</p>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--rl)">公式</div>
+  <div class="sblock-body">
+    <div class="fbox gold">
+      <span class="fline hi">S = VI　（最通用）</span>
+      <span class="fline hi">S = I²|Z|　（串聯）</span>
+      <span class="fline hi">S = V²/|Z|　（串聯）</span>
+      <span class="fline hi">S = V²|Y|　（並聯）</span>
+      <span class="fline hi">S = √(P² + Q²)</span>
+    </div>
+    <div class="note">S是設備的「額定容量」，如10kVA的變壓器，S代表電源必須提供的總功率</div>
+  </div>
+</div>
+</div>
+
+<!-- ========== 10-4 ========== -->
+<div class="page" id="p104">
+<div class="ch-header" style="border-left-color:var(--l)">
+  <h2>10-4　虛功率 Q</h2>
+  <p>單位：乏 VAR，儲存在電感/電容中的能量往返</p>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--l)">公式</div>
+  <div class="sblock-body">
+    <div class="fbox gold">
+      <span class="fline hi">Q = VI · sinθ　（最通用）</span>
+      <span class="fline hi">Q = I²X　（X為電抗值）</span>
+      <span class="fline hi">QL = I²XL　（電感虛功，Q為正值）</span>
+      <span class="fline hi">QC = -I²Xc　（電容虛功，Q為負值）</span>
+      <span class="fline">Q = √(S² - P²)</span>
+    </div>
+    <div class="g2">
+      <div class="note"><b>電感性：Q &gt; 0（正值）</b><br>電感吸收虛功率<br>功率三角形往上</div>
+      <div class="note" style="background:#f0fbf5;border-color:#b0d8c0;color:#0a3820"><b>電容性：Q &lt; 0（負值）</b><br>電容發出虛功率<br>功率三角形往下</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== 10-5 ========== -->
+<div class="page" id="p105">
+<div class="ch-header" style="border-left-color:var(--gold)">
+  <h2>10-5　功率因數 PF</h2>
+  <p>無單位，表示電能有效利用程度，越高越好</p>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--gold)">公式</div>
+  <div class="sblock-body">
+    <div class="fbox gold">
+      <span class="fline hi">PF = cosθ = P/S = R/|Z|（串聯）= G/|Y|（並聯）</span>
+      <span class="fline">範圍：0 ≤ PF ≤ 1</span>
+      <span class="fline key">「超前」= 電容性（I超前V，θ&lt;0）</span>
+      <span class="fline key">「落後」= 電感性（V超前I，θ&gt;0）</span>
+    </div>
+    <div class="cmp3">
+      <div class="ci"><div class="ci-v" style="color:var(--c)">PF=1</div><div class="ci-l">純電阻</div><div class="ci-s">θ=0°，P=S，Q=0</div></div>
+      <div class="ci"><div class="ci-v" style="color:var(--gold)">PF=0.8</div><div class="ci-l">一般負載</div><div class="ci-s">θ=37°，常見</div></div>
+      <div class="ci"><div class="ci-v" style="color:var(--r)">PF=0</div><div class="ci-l">純L或純C</div><div class="ci-s">θ=±90°，P=0</div></div>
+    </div>
+    <div class="tip"><b>PF越高越好！</b>PF低→相同P需更大S→電流更大→線路損失多→電費貴</div>
+  </div>
+</div>
+</div>
+
+<!-- ========== 10-6 ========== -->
+<div class="page" id="p106">
+<div class="ch-header" style="border-left-color:var(--rlc)">
+  <h2>10-6　複數功率與功率三角形</h2>
+  <p>P、Q、S 的關係——功率三角形</p>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--rlc)">功率三角形</div>
+  <div class="sblock-body">
+    <div class="svgwrap">
+      <svg viewBox="0 0 500 190" width="100%" style="max-width:500px">
+        <polygon points="25,165 385,165 385,55" fill="#fffbf0" stroke="#c8a000" stroke-width="1.5"/>
+        <polyline points="385,153 373,153 373,165" fill="none" stroke="#aaa" stroke-width="1.2"/>
+        <line x1="25" y1="165" x2="385" y2="165" stroke="#a83030" stroke-width="3"/>
+        <line x1="385" y1="165" x2="385" y2="55" stroke="#1a4a7a" stroke-width="3"/>
+        <line x1="25" y1="165" x2="385" y2="55" stroke="#806000" stroke-width="3.5"/>
+        <path d="M 105,165 A 80,80 0 0,0 82,122" fill="none" stroke="#502880" stroke-width="2"/>
+        <text x="205" y="188" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#a83030">P（實功率 W）</text>
+        <text x="402" y="115" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1a4a7a">Q（VAR）</text>
+        <text x="155" y="88" font-family="sans-serif" font-size="13" font-weight="bold" fill="#806000">S（視在功率 VA）</text>
+        <text x="113" y="148" font-family="sans-serif" font-size="14" font-weight="bold" fill="#502880">θ</text>
+        <!-- formulas -->
+        <text x="430" y="75" font-family="monospace" font-size="11" fill="#5a3800">S²=P²+Q²</text>
+        <text x="430" y="93" font-family="monospace" font-size="11" fill="#5a3800">P=Scosθ</text>
+        <text x="430" y="111" font-family="monospace" font-size="11" fill="#5a3800">Q=Ssinθ</text>
+        <text x="430" y="129" font-family="monospace" font-size="11" fill="#1a3a60">PF=cosθ</text>
+        <text x="430" y="147" font-family="monospace" font-size="11" fill="#1a3a60">  =P/S</text>
+      </svg>
+      <p>P（底邊）、Q（直角邊）、S（斜邊）— 結構和阻抗三角形相同！</p>
+    </div>
+    <div class="fbox gold">
+      <span class="fline hi">S̄ = P + jQ　（複數功率，VA）</span>
+      <span class="fline">|S̄| = S = √(P²+Q²)</span>
+      <span class="fline">電感性：S̄ = P + jQL　（Q正，三角形往上）</span>
+      <span class="fline">電容性：S̄ = P - jQC　（Q負，三角形往下）</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== 10-7 ========== -->
+<div class="page" id="p107">
+<div class="ch-header" style="border-left-color:#1a1a3a">
+  <h2>10-7　功率因數改善</h2>
+  <p>並聯電容器，提升PF，減少線路電流</p>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:#1a1a3a">為什麼要改善PF？</div>
+  <div class="sblock-body">
+    <div class="warn">PF低 → 相同P需要更大S → 電流I更大 → 線路損失I²R更多 → 電費貴、設備過熱</div>
+    <div class="note"><b>改善方法：</b>在電感性負載旁並聯電容器，用電容的負Q去抵消電感的正Q</div>
+  </div>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:#1a1a3a">公式與步驟</div>
+  <div class="sblock-body">
+    <div class="fbox gold">
+      <span class="fline hi">Qc = P · (tanθ1 - tanθ2)</span>
+      <span class="fline hi">C = Qc / (ωV²) = Qc / (2πfV²)</span>
+      <span class="fline">θ1 = cos⁻¹(PF1)　（原始角度）</span>
+      <span class="fline">θ2 = cos⁻¹(PF2)　（目標角度）</span>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="sn">1</div><div class="st">算θ1=cos⁻¹(PF1)，找tanθ1</div></div>
+      <div class="step"><div class="sn">2</div><div class="st">算θ2=cos⁻¹(PF2)，找tanθ2</div></div>
+      <div class="step"><div class="sn">3</div><div class="st">Qc=P(tanθ1-tanθ2)　→　需補多少VAR</div></div>
+      <div class="step"><div class="sn">4</div><div class="st">C=Qc/(ωV²)，ω=2πf</div></div>
+    </div>
+    <div class="tip"><b>改善PF的好處：</b>①增加系統供電能力 ②減少線路電流 ③節省電費 ④減少線路損失</div>
+  </div>
+</div>
+<div class="sblock">
+  <div class="sblock-title" style="background:#1a1a3a">例題</div>
+  <div class="sblock-body">
+    <div class="fbox green">
+      <span class="fline">已知：P=10kW，PF1=0.6落後，改善至PF2=0.9落後，V=220V，f=60Hz</span>
+      <span class="fline hi">①　θ1=cos⁻¹(0.6)=53°，tanθ1=4/3≈1.333</span>
+      <span class="fline hi">②　θ2=cos⁻¹(0.9)≈26°，tanθ2≈0.484</span>
+      <span class="fline hi">③　Qc=10000×(1.333-0.484)=10000×0.849≈8490VAR</span>
+      <span class="fline hi">④　C=8490/(377×220²)=8490/18226740≈466μF</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== 總速查 ========== -->
+<div class="page" id="pall">
+<div class="ch-header">
+  <h2>📊 總速查表</h2>
+  <p>第9章＋第10章所有公式、考試重點一頁搞定</p>
+</div>
+
+<div class="sblock">
+  <div class="sblock-title">第9章 — 所有電路一覽</div>
+  <div class="sblock-body">
+    <table class="nt">
+      <tr><th>電路</th><th>阻抗/導納</th><th>電抗公式</th><th>θ範圍</th><th>性質</th><th>V與I</th></tr>
+      <tr><td style="color:var(--r);font-weight:700">純R</td><td>Z̄=R∠0°</td><td>—</td><td>0°</td><td>電阻性</td><td>同相</td></tr>
+      <tr><td style="color:var(--c);font-weight:700">純C</td><td>Z̄=Xc∠-90°</td><td>Xc=1/(ωC)</td><td>-90°</td><td>電容性</td><td>I超前V 90°</td></tr>
+      <tr><td style="color:var(--l);font-weight:700">純L</td><td>Z̄=XL∠+90°</td><td>XL=ωL</td><td>+90°</td><td>電感性</td><td>V超前I 90°</td></tr>
+      <tr><td style="color:var(--rc);font-weight:700">RC串聯</td><td>Z̄=R-jXc</td><td>Xc=1/(ωC)</td><td>0°~-90°</td><td>電容性</td><td>V落後I</td></tr>
+      <tr><td style="color:var(--rl);font-weight:700">RL串聯</td><td>Z̄=R+jXL</td><td>XL=ωL</td><td>0°~+90°</td><td>電感性</td><td>V超前I</td></tr>
+      <tr><td style="color:var(--rlc);font-weight:700">RLC串聯</td><td>Z̄=R+j(XL-Xc)</td><td>兩者都要算</td><td>±角</td><td>視XL、Xc</td><td>看誰大</td></tr>
+      <tr><td style="font-weight:700">RC並聯</td><td>Ȳ=G-jBc</td><td>Bc=ωC</td><td>0°~+90°</td><td>電容性</td><td>I超前V</td></tr>
+      <tr><td style="font-weight:700">RL並聯</td><td>Ȳ=G-jBL</td><td>BL=1/(ωL)</td><td>0°~-90°</td><td>電感性</td><td>I落後V</td></tr>
+      <tr><td style="font-weight:700">RLC並聯</td><td>Ȳ=G+j(Bc-BL)</td><td>兩者都要算</td><td>±角</td><td>視Bc、BL</td><td>看誰大</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="sblock">
+  <div class="sblock-title">第10章 — 所有功率公式</div>
+  <div class="sblock-body">
+    <table class="nt">
+      <tr><th>種類</th><th>符號</th><th>單位</th><th>主要公式</th><th>備註</th></tr>
+      <tr><td style="color:var(--r);font-weight:700">瞬間功率</td><td>p(t)</td><td>W</td><td>VIcosθ[1-cos2ωt]+VIsinθ·sin2ωt</td><td>fp=2f !</td></tr>
+      <tr><td style="color:var(--c);font-weight:700">平均/實功率</td><td>P</td><td>W</td><td>VIcosθ = I²R = V²G</td><td>只有R消耗</td></tr>
+      <tr><td style="color:var(--rl);font-weight:700">視在功率</td><td>S</td><td>VA</td><td>VI = I²|Z| = √(P²+Q²)</td><td>電源總容量</td></tr>
+      <tr><td style="color:var(--l);font-weight:700">虛功率</td><td>Q</td><td>VAR</td><td>VIsinθ = I²X</td><td>L正C負</td></tr>
+      <tr><td style="color:var(--gold);font-weight:700">功率因數</td><td>PF</td><td>無</td><td>cosθ=P/S=R/|Z|(串)=G/|Y|(並)</td><td>越高越好</td></tr>
+      <tr><td style="color:var(--rlc);font-weight:700">複數功率</td><td>S̄</td><td>VA</td><td>P+jQ（L正C負）</td><td>|S̄|=S</td></tr>
+      <tr><td style="font-weight:700">PF改善</td><td>C</td><td>F</td><td>Qc=P(tanθ1-tanθ2)，C=Qc/(ωV²)</td><td>並聯電容</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="sblock">
+  <div class="sblock-title">常考三角形速查</div>
+  <div class="sblock-body">
+    <table class="nt">
+      <tr><th>三邊比例</th><th>角度</th><th>常見數字</th></tr>
+      <tr><td>3 : 4 : 5</td><td>37° — 53° — 90°</td><td>R=30,X=40,Z=50｜R=3,X=4,Z=5</td></tr>
+      <tr><td>4 : 3 : 5</td><td>53° — 37° — 90°</td><td>R=40,X=30,Z=50｜R=8,X=6,Z=10</td></tr>
+      <tr><td>5 : 12 : 13</td><td>23° — 67° — 90°</td><td>R=50,X=120,Z=130</td></tr>
+      <tr><td>1 : 1 : √2</td><td>45° — 45° — 90°</td><td>R=XL或R=Xc時，角度=45°</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="sblock">
+  <div class="sblock-title" style="background:var(--r)">⚠️ 最常犯的6個錯誤</div>
+  <div class="sblock-body">
+    <div class="warn"><b>①</b> 算角度時忘記負號：RC串聯Z̄角度是負的（-θ），不是正的</div>
+    <div class="warn"><b>②</b> 除以負角：V̄/Z̄=100∠0°÷50∠-53°=2∠+53°（負負得正！）</div>
+    <div class="warn"><b>③</b> 並聯忘用導納：並聯要先算G、BL、Bc，不能直接用Z</div>
+    <div class="warn"><b>④</b> 直接加阻抗：|Z|=√(R²+X²)，不是R+X</div>
+    <div class="warn"><b>⑤</b> PF方向搞反：「超前」=電容性，「落後」=電感性</div>
+    <div class="warn"><b>⑥</b> Q的正負：電感Q正，電容Q負（多負載合成時符號要對）</div>
+    <div class="tip"><b>💡 驗算方法：</b>√(VR²+VC²)=V｜√(VR²+VL²)=V｜√(P²+Q²)=S</div>
+  </div>
+</div>
+</div>
+
+<script>
+function go(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.navbtn').forEach(b=>b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  if(el)el.classList.add('on');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
